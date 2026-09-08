@@ -812,7 +812,7 @@ See the [LICENSE](LICENSE) file for details.
 
 **Afzal Jamal**
 
-GitHub: [23f3003203](https://github.com/afzal-10-02)
+GitHub: [afzal-10-02](https://github.com/afzal-10-02)
 
 ---
 
