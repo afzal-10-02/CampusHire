@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Active Placement Drives</title>
+</head>
+<body style="font-family: Arial, sans-serif; color: #333333; margin: 0; padding: 20px; background-color: #f8f9fa;">
+    
+    <div style="max-width: 650px; margin: 0 auto; background-color: #ffffff; padding: 25px; border: 1px solid #e3e6f0; border-radius: 6px;">
+        
+        <h3 style="color: #4e73df; margin-top: 0; border-bottom: 2px solid #eaecf4; padding-bottom: 12px; font-size: 20px;">
+            CampusHire — Active Placement Drives
+        </h3>
+        
+        <p style="font-size: 15px; line-height: 1.5;">
+            Dear <strong>{{ student_name }}</strong>,
+        </p>
+        
+        <p style="font-size: 14px; line-height: 1.5; color: #5a5c69; margin-bottom: 20px;">
+            Here is the summary of live placement opportunities currently accepting applications on the portal. Review your criteria match and apply before the cutoff date.
+        </p>
+
+        <!-- Dynamic Jobs Loop Table -->
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px;">
+            <thead>
+                <tr style="background-color: #f4f6f9;">
+                    <th style="border: 1px solid #e3e6f0; padding: 10px; text-align: left; font-size: 12px; color: #4e73df; text-transform: uppercase;">Job & Company</th>
+                    <th style="border: 1px solid #e3e6f0; padding: 10px; text-align: right; font-size: 12px; color: #4e73df; text-transform: uppercase; width: 160px;">Deadline</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for drive in drives %}
+                <tr>
+                    <td style="border: 1px solid #e3e6f0; padding: 12px; font-size: 14px;">
+                        <strong style="color: #2e59d9;">{{ drive.job_title }}</strong><br>
+                        <span style="font-size: 12px; color: #858796;">{{ drive.company }}</span>
+                    </td>
+                    
+                    <td style="border: 1px solid #e3e6f0; padding: 12px; text-align: right; font-size: 13px; color: #e74a3b; font-weight: 500;">
+                        {{ drive.deadline }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        
+        <p style="font-size: 11px; color: #b7b9cc; text-align: center; border-top: 1px solid #eaecf4; padding-top: 15px; margin-top: 30px; line-height: 1.4;">
+            This is an automated digest tracking active portal records.<br>
+            Please do not reply directly to this notification message thread.
+        </p>
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,632 @@
+openapi: 3.0.3
+
+info:
+  title: Campus Hire
+  version: 1.0.0
+  description: APIs for Campus Hire.
+
+servers:
+  - url: http://localhost:5000
+
+tags:
+  - name: CampusHire
+
+paths:
+
+  /api/admin/admin/approve-company/{id}:
+    patch:
+      tags:
+        - Admin
+      summary: Approve Company
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Company approved
+
+  /api/admin/admin/reject-company/{id}:
+    patch:
+      tags:
+        - Admin
+      summary: Reject Company
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Company rejected
+
+  /api/admin/admin/approve-drive/{id}:
+    put:
+      tags:
+        - Admin
+      summary: Approve Placement Drive
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Placement drive approved
+
+  /api/admin/admin/block-drive/{id}:
+    put:
+      tags:
+        - Admin
+      summary: Reject Placement Drive
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Placement drive rejected
+
+  /api/admin/admin/get-companies:
+    get:
+      tags:
+        - Admin
+      summary: Get Companies
+      responses:
+        "200":
+          description: Returns approved, pending and rejected companies
+
+  /api/admin/admin/get-drives:
+    get:
+      tags:
+        - Admin
+      summary: Get All Placement Drives
+      responses:
+        "200":
+          description: List all placement drives
+
+  /api/admin/admin/get-drives/{company_id}:
+    get:
+      tags:
+        - Admin
+      summary: Get Placement Drives of a Company
+      parameters:
+        - name: company_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Company drives
+
+  /api/admin/admin/get-overview:
+    get:
+      tags:
+        - Admin
+      summary: Dashboard Overview
+      responses:
+        "200":
+          description: Returns statistics of companies, students and drives
+
+  /api/admin/admin/get-students:
+    get:
+      tags:
+        - Admin
+      summary: Get All Students
+      responses:
+        "200":
+          description: Returns active and blocked students
+
+  /api/admin/admin/get-students/{student_id}:
+    get:
+      tags:
+        - Admin
+      summary: Get Student Details
+      parameters:
+        - name: student_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Student profile and applications
+
+  /api/admin/admin/block-student/{id}:
+    put:
+      tags:
+        - Admin
+      summary: Block Student
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Student blocked
+
+  /api/admin/admin/get-company/{id}:
+    get:
+      tags:
+        - Admin
+      summary: Company Details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Company profile and placement drives
+
+  /api/admin/admin/get-drive-details/{drive_id}:
+    get:
+      tags:
+        - Admin
+      summary: Placement Drive Details
+      parameters:
+        - name: drive_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Drive details and applied students
+
+  /api/company/registration:
+    post:
+      tags:
+        - Company
+      summary: Register a new company
+      description: Creates a new company account with HR details.
+      requestBody:
+        required: true
+      responses:
+        "201":
+          description: Company registered successfully
+        "400":
+          description: Invalid request
+
+  /api/company/dashboard:
+    get:
+      tags:
+        - Company
+      summary: Company Dashboard Statistics
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Dashboard statistics returned successfully
+
+  /api/company/create-drive:
+    post:
+      tags:
+        - Company
+      summary: Create Placement Drive
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+      responses:
+        "201":
+          description: Placement drive created
+        "400":
+          description: Invalid request
+
+  /api/company/get-dashboard:
+    get:
+      tags:
+        - Company
+      summary: List Company Placement Drives
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: List of placement drives
+
+  /api/company/update-profile:
+    get:
+      tags:
+        - Company
+      summary: Get Company Profile
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Company profile returned
+
+    put:
+      tags:
+        - Company
+      summary: Update Company Profile
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+      responses:
+        "200":
+          description: Profile updated successfully
+
+    post:
+      tags:
+        - Company
+      summary: Update Single Profile Field
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+      responses:
+        "200":
+          description: Field updated successfully
+
+  /api/company/get-student/{id}:
+    get:
+      tags:
+        - Company
+      summary: Get Student Details
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Student details
+        "404":
+          description: Student not found
+
+  /api/company/shortlist-student/{student_id}/{drive_id}:
+    get:
+      tags:
+        - Company
+      summary: Shortlist Student
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: student_id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+        - name: drive_id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        "200":
+          description: Student shortlisted
+        "404":
+          description: Application not found
+
+  /api/user/registration:
+    post:
+      tags:
+        - Student
+      summary: Register Student
+      description: Register a new student account.
+      requestBody:
+        required: true
+      responses:
+        "201":
+          description: Registration successful
+        "400":
+          description: Invalid request
+
+  /api/user/get-profile:
+    get:
+      tags:
+        - Student
+      summary: Get Student Profile
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Student profile returned
+        "404":
+          description: Student not found
+
+  /api/user/update-profile:
+    put:
+      tags:
+        - Student
+      summary: Update Student Profile
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+      responses:
+        "200":
+          description: Profile updated successfully
+        "400":
+          description: Invalid request
+
+  /api/user/get-active-drives:
+    get:
+      tags:
+        - Student
+      summary: Get Active Placement Drives
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: List of active placement drives
+
+  /api/user/get-drive/{id}:
+    get:
+      tags:
+        - Student
+      summary: Get Placement Drive Details
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Placement drive details
+        "404":
+          description: Drive not found
+
+  /api/user/get-active-companies:
+    get:
+      tags:
+        - Student
+      summary: Get Approved Companies
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: List of approved companies
+
+  /api/user/apply-drive/{drive_id}:
+    get:
+      tags:
+        - Student
+      summary: Apply for Placement Drive
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: drive_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Application submitted successfully
+        "400":
+          description: Not eligible or already applied
+        "404":
+          description: Drive not found
+
+  /api/user/get-history:
+    get:
+      tags:
+        - Student
+      summary: Get Application History
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Student application history
+
+  /api/user/export-placement-records:
+    get:
+      tags:
+        - Student
+      summary: Export Placement Records
+      description: Generates placement report and sends it to the student's email.
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Export request submitted
+
+  /api/user/get-company/{id}:
+    get:
+      tags:
+        - Student
+      summary: Get Company Details
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Company details with active placement drives
+        "404":
+          description: Company not found
+
+  /api/user/search:
+    get:
+      tags:
+        - Student
+        - Admin
+      summary: Global Search
+      description: Search students, companies and placement drives depending on the logged-in user's role.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: q
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Search keyword
+      responses:
+        "200":
+          description: Search results returned successfully
+
+
+schemas:
+
+  Admin:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      email:
+        type: string
+        format: email
+        example: admin@gmail.com
+      password:
+        type: string
+        example: "$2b$12$xxxxxxxx"
+
+  Student:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      email:
+        type: string
+        format: email
+      roll_number:
+        type: string
+        example: "CSE22001"
+      full_name:
+        type: string
+        example: "John Doe"
+      password:
+        type: string
+      address:
+        type: string
+        example: "New Delhi"
+      status:
+        type: string
+        enum:
+          - active
+          - blocked
+      branch:
+        type: string
+        example: "CSE"
+      cgpa:
+        type: number
+        format: float
+        example: 8.45
+      graduation_year:
+        type: integer
+        example: 2026
+      resume_link:
+        type: string
+        format: uri
+
+  Company:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      email:
+        type: string
+        format: email
+      password:
+        type: string
+      name:
+        type: string
+        example: "Google"
+      website:
+        type: string
+        format: uri
+      status:
+        type: string
+        enum:
+          - Pending
+          - Approved
+          - Rejected
+      description:
+        type: string
+      address:
+        type: string
+      hr_name:
+        type: string
+      hr_phone_number:
+        type: string
+      hr_email:
+        type: string
+        format: email
+
+  PlacementDrive:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 10
+      company_id:
+        type: integer
+      job_title:
+        type: string
+        example: "Software Engineer"
+      job_description:
+        type: string
+      eligible_branches:
+        type: string
+        example: "CSE, IT"
+      min_cgpa:
+        type: number
+        format: float
+        example: 7.5
+      eligible_year:
+        type: integer
+        example: 2026
+      application_deadline:
+        type: string
+        format: date-time
+      status:
+        type: string
+        enum:
+          - Pending
+          - Approved
+          - Rejected
+      created_at:
+        type: string
+        format: date-time
+
+  Application:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 100
+      student_id:
+        type: integer
+      drive_id:
+        type: integer
+      application_date:
+        type: string
+        format: date-time
+      status:
+        type: string
+        enum:
+          - Applied
+          - Shortlisted
+          - Selected
+          - Rejected
+      remarks:
+        type: string
